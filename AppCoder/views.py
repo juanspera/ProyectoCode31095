@@ -5,6 +5,12 @@ from django.shortcuts import render
 from AppCoder.models import Curso, Entregable
 
 
+def inicio(request):
+    contexto = {
+        "valor1": "este es un valor"
+    }
+    return render(request, 'index.html', contexto)
+
 def curso(request):
     curso1 = Curso(nombre="Python", camada=31095)
     curso1.save()
@@ -12,7 +18,7 @@ def curso(request):
         'curso': curso1
     }
 
-    return render(request, 'curso.html', contexto)
+    return render(request, 'AppCoder/curso.html', contexto)
 
 def entregable(request):
     entregables = [
@@ -46,4 +52,4 @@ def entregable(request):
         'entregable': entregable1
     }
 
-    return render(request, 'entregable.html', contexto)
+    return render(request, 'AppCoder/entregable.html', contexto)
