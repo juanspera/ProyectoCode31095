@@ -20,5 +20,6 @@ from AppCoder.views import curso, entregable
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('curso/', curso),
     path('entregable/', entregable)
 ]
