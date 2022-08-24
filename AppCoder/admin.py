@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from AppCoder.models import Curso, Entregable
+
+admin.site.register(Curso)
+admin.site.register(Entregable)

@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Curso</title>
-</head>
-<body>
-Un curso fue creado satisfactoriamente
-<br>
-Nombre {{ curso.nombre }}
-<br>
-Camada {{ curso.camada }}
-</body>
-</html>
+{% extends 'index.html' %}
+
+{% block title %}
+Curso
+{% endblock %}
+
+{% block inicio %}
+    Un curso fue creado satisfactoriamente
+    <br>
+    Nombre {{ curso.nombre }}
+    <br>
+    Camada {{ curso.camada }}
+{% endblock %}
+
