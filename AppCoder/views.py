@@ -1,8 +1,54 @@
 import datetime
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
+from AppCoder.forms import CursoFormulario, BusquedaCamadaFormulario
 from AppCoder.models import Curso, Entregable
+
+
+def busqueda_camada_post(request):
+    camada = request.GET.get('camada')
+
+    cursos = Curso.objects.filter(camada__icontains=camada)
+    contexto = {
+        'cursos': cursos
+    }
+
+    return render(request, 'AppCoder/curso_filtrado.html', contexto)
+
+
+def busqueda_camada(request):
+
+    contexto = {
+        'form': BusquedaCamadaFormulario(),
+    }
+
+    return render(request, 'AppCoder/busqueda_camada.html', contexto)
+
+
+
+def curso_formulario(request):
+
+    if request.method == 'POST':
+        mi_formulario = CursoFormulario(request.POST)
+
+        if mi_formulario.is_valid():
+
+            data = mi_formulario.cleaned_data
+
+            curso1 = Curso(nombre=data.get('nombre'), camada=data.get('camada'))
+            curso1.save()
+
+            return redirect('AppCoderCursoFormulario')
+
+    cursos = Curso.objects.all()
+
+    contexto = {
+        'form': CursoFormulario(),
+        'cursos': cursos
+    }
+
+    return render(request, 'AppCoder/curso_formulario.html', contexto)
 
 
 def inicio(request):
