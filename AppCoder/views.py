@@ -39,13 +39,12 @@ def curso_formulario(request):
             curso1 = Curso(nombre=data.get('nombre'), camada=data.get('camada'))
             curso1.save()
 
-            return redirect('AppCoderCursoFormulario')
+            return redirect('AppCoderCurso')
 
-    cursos = Curso.objects.all()
+
 
     contexto = {
-        'form': CursoFormulario(),
-        'cursos': cursos
+        'form': CursoFormulario()
     }
 
     return render(request, 'AppCoder/curso_formulario.html', contexto)
@@ -58,10 +57,9 @@ def inicio(request):
     return render(request, 'index.html', contexto)
 
 def curso(request):
-    curso1 = Curso(nombre="Python", camada=31095)
-    curso1.save()
+    cursos = Curso.objects.all()
     contexto = {
-        'curso': curso1
+        'cursos': cursos
     }
 
     return render(request, 'AppCoder/curso.html', contexto)
