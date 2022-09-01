@@ -1,9 +1,52 @@
 import datetime
 
+from django.contrib import messages
 from django.shortcuts import render, redirect
+import django
+from django.views.generic import ListView
 
 from AppCoder.forms import CursoFormulario, BusquedaCamadaFormulario
 from AppCoder.models import Curso, Entregable
+
+
+def editar_curso(request, camada):
+    curso_editar = Curso.objects.get(camada=camada)
+
+    if request.method == 'POST':
+        mi_formulario = CursoFormulario(request.POST)
+
+        if mi_formulario.is_valid():
+
+            data = mi_formulario.cleaned_data
+
+            curso_editar.nombre = data.get('nombre')
+            curso_editar.camada = data.get('camada')
+            try:
+                curso_editar.save()
+            except django.db.utils.IntegrityError:
+                messages.error(request, "la modificacion fallo por que la camada esta repedita")
+
+            return redirect('AppCoderCurso')
+
+    contexto = {
+        'form': CursoFormulario(
+            initial={
+                "nombre": curso_editar.nombre,
+                "camada": curso_editar.camada
+            }
+        )
+    }
+
+    return render(request, 'AppCoder/curso_formulario.html', contexto)
+
+
+def eliminar_curso(request, camada):
+    curso_eliminar = Curso.objects.get(camada=camada)
+    curso_eliminar.delete()
+
+    messages.info(request, f"El curso {curso_eliminar} fue eliminado")
+
+    return redirect("AppCoderCurso")
 
 
 def busqueda_camada_post(request):
@@ -56,13 +99,20 @@ def inicio(request):
     }
     return render(request, 'index.html', contexto)
 
-def curso(request):
-    cursos = Curso.objects.all()
-    contexto = {
-        'cursos': cursos
-    }
 
-    return render(request, 'AppCoder/curso.html', contexto)
+class CursoList(ListView):
+    model = Curso
+    template_name = 'AppCoder/curso.html'
+
+
+
+# def curso(request):
+#     cursos = Curso.objects.all()
+#     contexto = {
+#         'object_list': cursos
+#     }
+#
+#     return render(request, 'AppCoder/curso.html', contexto)
 
 def entregable(request):
     entregables = [
