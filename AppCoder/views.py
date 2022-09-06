@@ -1,6 +1,8 @@
 import datetime
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 import django
 from django.views.generic import ListView
@@ -100,7 +102,7 @@ def inicio(request):
     return render(request, 'index.html', contexto)
 
 
-class CursoList(ListView):
+class CursoList(LoginRequiredMixin, ListView):
     model = Curso
     template_name = 'AppCoder/curso.html'
 
@@ -114,6 +116,7 @@ class CursoList(ListView):
 #
 #     return render(request, 'AppCoder/curso.html', contexto)
 
+@login_required
 def entregable(request):
     entregables = [
         {
