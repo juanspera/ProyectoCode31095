@@ -9,7 +9,7 @@ class Curso(models.Model):
         return f"Curso: {self.nombre}, Camada: {self.camada}"
 
 
-class Estudiantes(models.Model):
+class Estudiante(models.Model):
     nombre = models.CharField(max_length=30)
     apellido = models.CharField(max_length=30)
     email = models.EmailField(unique=True)

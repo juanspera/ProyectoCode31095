@@ -36,10 +36,12 @@ def editar_curso(request, camada):
                 "nombre": curso_editar.nombre,
                 "camada": curso_editar.camada
             }
-        )
+        ),
+        'titulo_form': 'Cursos Formulario',
+        'boton_envio': 'Crear'
     }
 
-    return render(request, 'AppCoder/curso_formulario.html', contexto)
+    return render(request, 'base_formulario.html', contexto)
 
 
 def eliminar_curso(request, camada):
@@ -66,10 +68,11 @@ def busqueda_camada(request):
 
     contexto = {
         'form': BusquedaCamadaFormulario(),
+        'titulo_form': 'Buscar Curso',
+        'boton_envio': 'Buscar'
     }
 
-    return render(request, 'AppCoder/busqueda_camada.html', contexto)
-
+    return render(request, 'forms/busquedas.html', contexto)
 
 
 def curso_formulario(request):
@@ -86,13 +89,13 @@ def curso_formulario(request):
 
             return redirect('AppCoderCurso')
 
-
-
     contexto = {
-        'form': CursoFormulario()
+        'form': CursoFormulario(),
+        'titulo_form': 'Cursos Formulario',
+        'boton_envio': 'Crear'
     }
 
-    return render(request, 'AppCoder/curso_formulario.html', contexto)
+    return render(request, 'base_formulario.html', contexto)
 
 
 def inicio(request):
@@ -102,19 +105,20 @@ def inicio(request):
     return render(request, 'index.html', contexto)
 
 
-class CursoList(LoginRequiredMixin, ListView):
-    model = Curso
-    template_name = 'AppCoder/curso.html'
+# class CursoList(LoginRequiredMixin, ListView):
+#     model = Curso
+#     template_name = 'AppCoder/curso.html'
 
 
+def curso(request):
+    cursos = Curso.objects.all()
+    entregables = Entregable.objects.all()
+    contexto = {
+        'object_list': cursos,
+        'entregables': entregables
+    }
 
-# def curso(request):
-#     cursos = Curso.objects.all()
-#     contexto = {
-#         'object_list': cursos
-#     }
-#
-#     return render(request, 'AppCoder/curso.html', contexto)
+    return render(request, 'AppCoder/curso.html', contexto)
 
 @login_required
 def entregable(request):

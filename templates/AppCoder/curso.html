@@ -12,6 +12,10 @@ Curso
         <a href="{% url 'AppCoderEditarCurso' curso.camada %}"> Editar</a>
         <br>
     {% endfor %}
+    {% for entregable in entregables %}
+        El entregable es: {{ entregable.nombre }}
+        <br>
+    {% endfor %}
 
 {% endblock %}
 

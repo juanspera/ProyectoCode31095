@@ -1,20 +1,20 @@
 {% extends 'index.html' %}
 
 {% block title %}
-{{ nombre_form }}
+{{ titulo_form }}
 {% endblock %}
 
 {% block inicio %}
+
+    <h2>{{ titulo_form }}</h2>
 
     <form action="" method="POST">
     {% csrf_token %}
 
         {{ form.as_p }}
 
-        <input type="submit" value="{{ nombre_form }}">
+        <input type="submit" value="{{ boton_envio }}">
 
     </form>
 
-
 {% endblock %}
-
