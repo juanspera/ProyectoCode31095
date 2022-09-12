@@ -1,0 +1,1 @@
+web: gunicorn ProyectoCode31095.wsgi
